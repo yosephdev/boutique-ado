@@ -10,6 +10,10 @@ body {
     font-family: 'Lato';
 }
 
+.content-wrapper {
+    padding-top: 164px; 
+}
+
 /* from Bulma */
 .icon {
     align-items: center;
@@ -56,6 +60,10 @@ body {
     border: 1px solid black !important;
 }
 
+.bg-black {
+    background: #000 !important;
+}
+
 /* -------------------------------- Media Queries */
 
 /* Slightly larger container on xl screens */
@@ -77,5 +85,22 @@ body {
 
     .header-container {
         padding-top: 164px;
+    }   
+}
+
+@media (max-width: 576px) {
+    .content-wrapper {
+        padding-top: 200px; 
+    }
+
+    h1.display-4 {
+        font-size:2rem; 
+        font-weight: bold;
+        text-align: center; 
+    }
+
+    .shop-now-button {
+        width: 100%;
+        text-align: center;
     }
 }
