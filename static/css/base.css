@@ -76,41 +76,49 @@ body {
 
 /* -------------------------------- Media Queries */
 
-/* Slightly larger container on xl screens */
 @media (min-width: 1200px) {
-  .container {
-    max-width: 80%;
-  }
-}
-
-/* fixed top navbar only on medium and up */
-@media (min-width: 992px) {
+    .container {
+      max-width: 80%;
+    }
+  }  
+ 
+  @media (min-width: 992px) {
     .fixed-top-desktop-only {
-        position: fixed;
-        top: 0;
-        right: 0;
-        left: 0;
-        z-index: 1030;
+      position: fixed;
+      top: 0;
+      right: 0;
+      left: 0;
+      z-index: 1030;
     }
-
+  
     .header-container {
-        padding-top: 164px;
-    }   
-}
-
-@media (max-width: 576px) {
+      padding-top: 164px;
+    }
+  }  
+  
+  @media (max-width: 576px) {
     .content-wrapper {
-        padding-top: 200px; 
+      padding-top: 116px;
     }
-
+  
     h1.display-4 {
-        font-size:2rem; 
-        font-weight: bold;
-        text-align: center; 
+      font-size: 2rem;
+      font-weight: bold;
+      text-align: center;
     }
-
+  
     .shop-now-button {
-        width: 100%;
-        text-align: center;
+      width: 100%;
+      text-align: center;
     }
-}
+  }  
+  
+  @media (max-width: 991px) {
+    .header-container {
+      padding-top: 116px;
+    }
+  
+    body {
+      min-height: calc(100vh - 116px);
+    }
+  }
