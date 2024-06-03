@@ -5,11 +5,12 @@ A little script that does a big migration
 
 import json
 import os
-import requests
 import shutil
 import subprocess
 import sys
 from os.path import exists
+
+import requests
 
 COLOURS = {"red": "\033[31m",
            "blue": "\033[34m",
