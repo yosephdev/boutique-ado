@@ -25,7 +25,8 @@ SECRET_KEY = 'django-insecure-#&@nhcto!b+fzl1cs)(l)=1e6$4v$^ut4)uoccq*ggde8ox4ux
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['8000-yosephdev-boutiqueado-qka44mu7iwm.ws.codeinstitute-ide.net']
+ALLOWED_HOSTS = [
+    '8000-yosephdev-boutiqueado-qka44mu7iwm.ws.codeinstitute-ide.net']
 
 
 # Application definition
@@ -36,8 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.staticfiles',   
-    'django.contrib.sites',  
+    'django.contrib.staticfiles',
+    'django.contrib.sites',
     "allauth",
     "allauth.account",
     "allauth.socialaccount",
