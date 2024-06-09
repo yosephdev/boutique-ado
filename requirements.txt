@@ -6,6 +6,8 @@ django-allauth==0.63.3
 django-crispy-forms==1.14.0
 pathspec==0.12.1
 pillow==10.3.0
+python-dotenv==1.0.1
 pytz==2024.1
 setuptools==70.0.0
 sqlparse==0.5.0
+stripe==9.10.0
