@@ -71,7 +71,6 @@ def checkout(request):
                 "There was an error with your form. "
                 "Please double check your information.",
             )
-            print(order_form.errors)
     else:
         bag = request.session.get("bag", {})
         if not bag:

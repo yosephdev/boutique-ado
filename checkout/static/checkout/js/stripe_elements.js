@@ -7,8 +7,8 @@
 */
 
 // Get the Stripe public key and client secret from the hidden elements
-var stripePublicKey = document.getElementById('id_stripe_public_key').textContent.trim();
-var clientSecret = document.getElementById('id_client_secret').textContent.trim();
+var stripePublicKey = JSON.parse(document.getElementById('id_stripe_public_key').textContent);
+var clientSecret = JSON.parse(document.getElementById('id_client_secret').textContent);
 
 // Initialize Stripe and create an instance of elements
 var stripe = Stripe(stripePublicKey);
@@ -55,7 +55,6 @@ card.addEventListener('change', function (event) {
 
 // Handle form submit
 var form = document.getElementById('payment-form');
-
 form.addEventListener('submit', function (ev) {
     ev.preventDefault();
     card.update({ 'disabled': true });
