@@ -1,114 +1,114 @@
-![CI logo](https://codeinstitute.s3.amazonaws.com/fullstack/ci_logo_small.png)
+# Boutique Ado
 
-Welcome USER_NAME,
+Boutique Ado is a Django web application for an online clothing store. Users can browse through available products, add items to their shopping bag, and proceed to checkout to complete their orders.
 
-This is the Code Institute student template for Gitpod. We have preinstalled all of the tools you need to get started. It's perfectly ok to use this template as the basis for your project submissions.
+## Table of Contents
 
-You can safely delete this README.md file or change it for your own project. Please do read it at least once, though! It contains some important information about Gitpod and the extensions we use. Some of this information has been updated since the video content was created. The last update to this file was: **May 28, 2024**
+- [Installation](#installation)
+- [Usage](#usage)
+- [Configuration](#configuration)
+- [Dependencies](#dependencies)
+- [Contributing](#contributing)
+- [License](#license)
 
-## Gitpod Reminders
+## Installation
 
-To run a frontend (HTML, CSS, Javascript only) application in Gitpod, in the terminal, type:
+To run the Boutique Ado application locally, follow these steps:
 
-`python3 -m http.server`
+1. Clone the repository to your local machine:
 
-A blue button should appear to click: _Make Public_,
+    ```bash
+    git clone https://github.com/your_username/boutique_ado.git
+    ```
 
-Another blue button should appear to click: _Open Browser_.
+2. Navigate to the project directory:
 
-To run a backend Python file, type `python3 app.py` if your Python file is named `app.py`, of course.
+    ```bash
+    cd boutique_ado
+    ```
 
-A blue button should appear to click: _Make Public_,
+3. Install the project dependencies:
 
-Another blue button should appear to click: _Open Browser_.
+    ```bash
+    pip install -r requirements.txt
+    ```
 
-By Default, Gitpod gives you superuser security privileges. Therefore, you do not need to use the `sudo` (superuser do) command in the bash terminal in any of the lessons.
+4. Create a `.env` file in the project root directory and set the environment variables:
 
-To log into the Heroku toolbelt CLI:
+    ```plaintext
+    STRIPE_PUBLIC_KEY=your_stripe_public_key
+    STRIPE_SECRET_KEY=your_stripe_secret_key
+    ```
 
-1. Log in to your Heroku account and go to *Account Settings* in the menu under your avatar.
-2. Scroll down to the *API Key* and click *Reveal*
-3. Copy the key
-4. In Gitpod, from the terminal, run `heroku_config`
-5. Paste in your API key when asked
+5. Apply migrations to create the database schema:
 
-You can now use the `heroku` CLI program - try running `heroku apps` to confirm it works. This API key is unique and private to you, so do not share it. If you accidentally make it public, you can create a new one with _Regenerate API Key_.
+    ```bash
+    python manage.py migrate
+    ```
 
-------
+6. Run the development server:
 
-## Release History
+    ```bash
+    python manage.py runserver
+    ```
 
-We continually tweak and adjust this template to help give you the best experience. Here is the version history:
+The application should now be accessible at `http://localhost:8000`.
 
-**May 28 2024:** Fix Mongo and Links installs
+## Usage
 
-**April 26 2024:** Update node version to 16
+Once the application is running, you can access it using a web browser. Users can navigate through the product listings, add items to their shopping bag, and proceed to checkout to complete their orders.
 
-**September 20 2023:** Update Python version to 3.9.17.
+## Configuration
 
-**September 1 2021:** Remove `PGHOSTADDR` environment variable.
+### Settings
 
-**July 19 2021:** Remove `font_fix` script now that the terminal font issue is fixed.
+- `BASE_DIR`: Base directory of the Django project.
+- `SECRET_KEY`: Secret key used for cryptographic signing.
+- `DEBUG`: Boolean flag indicating whether debug mode is enabled.
+- `ALLOWED_HOSTS`: List of allowed host/domain names for the application.
+- `INSTALLED_APPS`: List of installed Django applications.
+- `MIDDLEWARE`: List of middleware classes used by the application.
+- `CRISPY_TEMPLATE_PACK`: Name of the template pack for crispy forms.
+- `TEMPLATES`: Configuration for Django templates.
+- `MESSAGE_STORAGE`: Storage backend for messages framework.
+- `AUTHENTICATION_BACKENDS`: Authentication backends for user authentication.
+- `SITE_ID`: ID of the current site in the Django Sites framework.
+- `EMAIL_BACKEND`: Email backend for sending emails.
+- `DATABASES`: Configuration for database connections.
+- `LANGUAGE_CODE`: Default language code for the application.
+- `TIME_ZONE`: Default time zone for the application.
+- `USE_I18N`: Boolean flag indicating whether to enable translation.
+- `USE_L10N`: Boolean flag indicating whether to enable localization.
+- `USE_TZ`: Boolean flag indicating whether to enable timezone support.
+- `STATIC_URL`: URL prefix for static files.
+- `STATICFILES_DIRS`: List of directories to search for static files.
+- `MEDIA_URL`: URL prefix for media files.
+- `MEDIA_ROOT`: Directory where uploaded media files are stored.
+- `FREE_DELIVERY_THRESHOLD`: Threshold amount for free delivery.
+- `STANDARD_DELIVERY_PERCENTAGE`: Percentage of the order total for standard delivery.
+- `STRIPE_CURRENCY`: Currency used for Stripe payments.
+- `STRIPE_PUBLIC_KEY`: Public key for Stripe integration.
+- `STRIPE_SECRET_KEY`: Secret key for Stripe integration.
 
-**July 2 2021:** Remove extensions that are not available in Open VSX.
+## Dependencies
 
-**June 30 2021:** Combined the P4 and P5 templates into one file, added the uptime script. See the FAQ at the end of this file.
+- Django 3.2.25
+- Python 3.x
+- Stripe API
 
-**June 10 2021:** Added: `font_fix` script and alias to fix the Terminal font issue
+## Contributing
 
-**May 10 2021:** Added `heroku_config` script to allow Heroku API key to be stored as an environment variable.
+Contributions to Boutique Ado are welcome! To contribute, please follow these steps:
 
-**April 7 2021:** Upgraded the template for VS Code instead of Theia.
+1. Fork the repository on GitHub.
+2. Create a new branch with a descriptive name.
+3. Make your changes and commit them to your branch.
+4. Push your changes to your fork.
+5. Submit a pull request to the main repository.
 
-**October 21 2020:** Versions of the HTMLHint, Prettier, Bootstrap4 CDN and Auto Close extensions updated. The Python extension needs to stay the same version for now.
+## Acknowledgments
 
-**October 08 2020:** Additional large Gitpod files (`core.mongo*` and `core.python*`) are now hidden in the Explorer, and have been added to the `.gitignore` by default.
+I would like to acknowledge the following resources and individuals who have contributed to the development of this project:
 
-**September 22 2020:** Gitpod occasionally creates large `core.Microsoft` files. These are now hidden in the Explorer. A `.gitignore` file has been created to make sure these files will not be committed, along with other common files.
-
-**April 16 2020:** The template now automatically installs MySQL instead of relying on the Gitpod MySQL image. The message about a Python linter not being installed has been dealt with, and the set-up files are now hidden in the Gitpod file explorer.
-
-**April 13 2020:** Added the _Prettier_ code beautifier extension instead of the code formatter built-in to Gitpod.
-
-**February 2020:** The initialisation files now _do not_ auto-delete. They will remain in your project. You can safely ignore them. They just make sure that your workspace is configured correctly each time you open it. It will also prevent the Gitpod configuration popup from appearing.
-
-**December 2019:** Added Eventyret's Bootstrap 4 extension. Type `!bscdn` in a HTML file to add the Bootstrap boilerplate. Check out the <a href="https://github.com/Eventyret/vscode-bcdn" target="_blank">README.md file at the official repo</a> for more options.
-
-------
-
-## FAQ about the uptime script
-
-**Why have you added this script?**
-
-It will help us to calculate how many running workspaces there are at any one time, which greatly helps us with cost and capacity planning. It will help us decide on the future direction of our cloud-based IDE strategy.
-
-**How will this affect me?**
-
-For everyday usage of Gitpod, it doesn’t have any effect at all. The script only captures the following data:
-
-- An ID that is randomly generated each time the workspace is started.
-- The current date and time
-- The workspace status of “started” or “running”, which is sent every 5 minutes.
-
-It is not possible for us or anyone else to trace the random ID back to an individual, and no personal data is being captured. It will not slow down the workspace or affect your work.
-
-**So….?**
-
-We want to tell you this so that we are being completely transparent about the data we collect and what we do with it.
-
-**Can I opt out?**
-
-Yes, you can. Since no personally identifiable information is being captured, we'd appreciate it if you let the script run; however if you are unhappy with the idea, simply run the following commands from the terminal window after creating the workspace, and this will remove the uptime script:
-
-```
-pkill uptime.sh
-rm .vscode/uptime.sh
-```
-
-**Anything more?**
-
-Yes! We'd strongly encourage you to look at the source code of the `uptime.sh` file so that you know what it's doing. As future software developers, it will be great practice to see how these shell scripts work.
-
----
-
-Happy coding!
+- [Niel McEwen](https://github.com/NielMc)
+- [Matt Rudge](https://github.com/lechien73)
