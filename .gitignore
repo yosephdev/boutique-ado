@@ -10,4 +10,5 @@ node_modules/
 cloudinary_python.txt
 *.sqlite3
 *. pyc and 
-__pycache__
+__pycache__ 
+.vscode/settings.json
