@@ -82,6 +82,12 @@
                                             {% else %}
                                                 <small class="text-muted">No Rating</small>
                                             {% endif %}
+                                            {% if request.user.is_superuser %}
+                                            <small class="ml-3">
+                                                <a href="{% url 'edit_product' product.id %}">Edit</a> | 
+                                                <a class="text-danger" href="{% url 'delete_product' product.id %}">Delete</a>
+                                            </small>
+                                            {% endif %}
                                         </div>
                                     </div>
                                 </div>
@@ -122,40 +128,37 @@
 {% block postloadjs %}
     {{ block.super }}
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
+    <script type="text/javascript">
         (function($) {
             $(document).ready(function() {
-                // Scroll to top functionality
                 $('.btt-link').click(function(e) {
-                    e.preventDefault(); // Prevent default link behavior
-                    $('html, body').animate({ scrollTop: 0 }, 'slow'); // Smooth scrolling animation
+                    e.preventDefault();
+                    $('html, body').animate({ scrollTop: 0 }, 'slow');
                 });
 
-                // Sorting functionality
                 $('#sort-selector').change(function() {
-                    var selector = $(this); // Get the select element
-                    var currentUrl = new URL(window.location); // Get the current URL
-                    var selectedVal = selector.val(); // Get the selected value
+                    var selector = $(this);
+                    var currentUrl = new URL(window.location);
+                    var selectedVal = selector.val();
 
-                    // If a sort option is selected
                     if (selectedVal !== "reset") {
                         var sortParts = selectedVal.split("_");
                         if (sortParts.length === 2) {
-                            var sort = sortParts[0]; // Extract the sort value
-                            var direction = sortParts[1]; // Extract the direction value
-                            currentUrl.searchParams.set("sort", sort); // Set the sort parameter
-                            currentUrl.searchParams.set("direction", direction); // Set the direction parameter
+                            var sort = sortParts[0];
+                            var direction = sortParts[1];
+                            currentUrl.searchParams.set("sort", sort);
+                            currentUrl.searchParams.set("direction", direction);
                         }
-                    } else { // If "reset" is selected
+                    } else {
                         if (currentUrl.searchParams.has("sort")) {
-                            currentUrl.searchParams.delete("sort"); // Remove the sort parameter
+                            currentUrl.searchParams.delete("sort");
                         }
                         if (currentUrl.searchParams.has("direction")) {
-                            currentUrl.searchParams.delete("direction"); // Remove the direction parameter
+                            currentUrl.searchParams.delete("direction");
                         }
                     }
 
-                    window.location.replace(currentUrl); // Navigate to the new URL
+                    window.location.replace(currentUrl);
                 });
             });
         })(jQuery);
