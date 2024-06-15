@@ -1,12 +1,15 @@
 asgiref==3.8.1
 black==24.4.2
 click==8.1.7
+dj-database-url==0.5.0
 Django==3.2.25
 django-allauth==0.63.3
 django-countries==7.2.1
 django-crispy-forms==1.14.0
+gunicorn==22.0.0
 pathspec==0.12.1
 pillow==10.3.0
+psycopg2==2.9.9
 python-dotenv==1.0.1
 pytz==2024.1
 setuptools==70.0.0
