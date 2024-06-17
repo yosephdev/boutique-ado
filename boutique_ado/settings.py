@@ -80,6 +80,8 @@ AUTHENTICATION_BACKENDS = [
 ]
 
 SITE_ID = 1
+SECURE_SSL_REDIRECT = True
+SECURE_REFERRER_POLICY = 'same-origin'
 
 if 'DEVELOPMENT' in os.environ:
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
