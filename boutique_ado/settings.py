@@ -3,17 +3,14 @@ import dj_database_url
 from pathlib import Path
 from dotenv import load_dotenv
 
+
 load_dotenv()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = os.getenv("SECRET_KEY")
-DEBUG = os.getenv("DEVELOPMENT") == "True"
-
-ALLOWED_HOSTS = [
-    "8000-yosephdev-boutiqueado-qka44mu7iwm.ws.codeinstitute-ide.net",
-    "boutique-adey-61c58d87c08b.herokuapp.com",
-]
+SECRET_KEY = os.getenv("SECRET_KEY", "default_secret_key")
+DEBUG = os.getenv("DEBUG") == "True"
+ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "127.0.0.1,localhost").split(",")
 
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -80,7 +77,7 @@ AUTHENTICATION_BACKENDS = [
 ]
 
 SITE_ID = 1
-SECURE_SSL_REDIRECT = True
+SECURE_SSL_REDIRECT = not DEBUG
 SECURE_REFERRER_POLICY = "same-origin"
 
 if "DEVELOPMENT" in os.environ:
@@ -105,7 +102,17 @@ LOGIN_REDIRECT_URL = "/"
 
 WSGI_APPLICATION = "boutique_ado.wsgi.application"
 
-DATABASES = {"default": dj_database_url.parse(os.getenv("DATABASE_URL"))}
+if 'DATABASE_URL' in os.environ:
+    DATABASES = {
+        'default': dj_database_url.parse(os.environ.get('DATABASE_URL'))
+    }
+else: 
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
 
 AUTH_PASSWORD_VALIDATORS = [
     {
