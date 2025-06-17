@@ -13,3 +13,4 @@ cloudinary_python.txt
 __pycache__ 
 .vscode/settings.json
 debug.log
+env/
