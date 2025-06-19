@@ -1,147 +1,161 @@
 {% load static %}
-
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
-  {% block meta %}
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  {% endblock %}
+    {% block meta %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-  {% block extra_meta %}{% endblock %}
+    <meta name="description"
+        content="Boutique Ado - Trendy fashion and accessories for all. Discover our stylish collection online.">
+    <meta name="keywords" content="Boutique, Fashion, Ado, Clothing, Accessories, Online Store">
+    <meta name="author" content="Yoseph Berhane">
+    <meta name="robots" content="index, follow">
 
-  {% block corecss %}
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
-    integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato&display=swap">
-  <link rel="stylesheet" href="{% static 'css/base.css' %}">
-  {% endblock %}
+    <!-- Open Graph -->
+    <meta property="og:title" content="Boutique Ado">
+    <meta property="og:description" content="Explore trendy fashion and accessories at Boutique Ado.">
+    <meta property="og:image" content="{% static 'images/og-image.jpg' %}">
+    <meta property="og:url" content="https://boutique-adey-61c58d87c08b.herokuapp.com/">
+    <meta property="og:type" content="website">
 
-  {% block extra_css %}{% endblock %}
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Boutique Ado">
+    <meta name="twitter:description" content="Trendy fashion and accessories. Discover Boutique Ado now.">
+    <meta name="twitter:image" content="{% static 'images/og-image.svg' %}">
+    {% endblock %}
 
-  {% block corejs %}
-  <script src="https://kit.fontawesome.com/3b20d96fa9.js" crossorigin="anonymous" defer></script>
-  <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-   <!-- Stripe -->
-   <script src="https://js.stripe.com/v3/"></script>
-  {% endblock %}
+    <title>{% block title %}Boutique Ado{% endblock %}</title>
+    {% block extra_meta %}{% endblock %}
 
-  {% block extra_js %}{% endblock %}
+    <!-- Favicon -->
+    <link rel="icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon">
 
-  <title>Boutique Ado {% block extra_title %}{% endblock %}</title>
+    {% block corecss %}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+        integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    {% endblock %}
+
+    {% block extra_css %}{% endblock %}
+
+    {% block corejs %}
+    <script src="https://kit.fontawesome.com/3b20d96fa9.js" crossorigin="anonymous" defer></script>
+    <script src="https://js.stripe.com/v3/" defer></script>
+    {% endblock %}
+
+    {% block extra_js %}{% endblock %}
 </head>
 
 <body>
-  <header class="container-fluid fixed-top">
-    <div id="topnav" class="row bg-white pt-lg-2 d-none d-lg-flex">
-      <div class="col-12 col-lg-4 my-auto py-1 py-lg-0 text-center text-lg-left">
-        <a href="{% url 'home' %}" class="nav-link main-logo-link">
-          <h2 class="logo-font text-black my-0"><strong>Boutique</strong> Ado</h2>
-        </a>
-      </div>
-      <div class="col-12 col-lg-4 my-auto py-1 py-lg-0">
-        <form method="GET" action="{% url 'products' %}">
-          <div class="input-group w-100">
-            <input class="form-control border border-black rounded-0" type="text" name="q"
-              placeholder="Search our site">
-            <div class="input-group-append">
-              <button class="form-control btn btn-black border border-black rounded-0" type="submit">
-                <span class="icon"><i class="fas fa-search"></i></span>
-              </button>
+    <header class="container-fluid fixed-top">
+        <!-- Top Navigation -->
+        <div id="topnav" class="row bg-white pt-lg-2 d-none d-lg-flex">
+            <div class="col-lg-4 text-center text-lg-left my-auto">
+                <a href="{% url 'home' %}" class="nav-link main-logo-link">
+                    <h2 class="logo-font text-black my-0"><strong>Boutique</strong> Ado</h2>
+                </a>
             </div>
-          </div>
-        </form>
-      </div>
-      <div class="col-12 col-lg-4 my-auto py-1 py-lg-0">
-        <ul class="list-inline list-unstyled text-center text-lg-right my-0">
-          <li class="list-inline-item dropdown">
-            <a class="text-black nav-link" href="#" id="user-options" data-toggle="dropdown" aria-haspopup="true"
-              aria-expanded="false">
-              <div class="text-center">
-                <div><i class="fas fa-user fa-lg"></i></div>
-                <p class="my-0">My Account</p>
-              </div>
-            </a>
-            <div class="dropdown-menu border-0" aria-labelledby="user-options">
-              {% if request.user.is_authenticated %}
-                  {% if request.user.is_superuser %}
-                  <a href="{% url 'add_product' %}" class="dropdown-item">Product Management</a>
-                  {% endif %}
-                  <a href="{% url 'profile' %}" class="dropdown-item">My Profile</a>
-                  <a href="{% url 'account_logout' %}" class="dropdown-item">Logout</a>
-              {% else %}
-                  <a href="{% url 'account_signup' %}" class="dropdown-item">Register</a>
-                  <a href="{% url 'account_login' %}" class="dropdown-item">Login</a>
-              {% endif %}
+            <div class="col-lg-4 my-auto">
+                <form method="GET" action="{% url 'products' %}">
+                    <div class="input-group w-100">
+                        <input class="form-control border border-black rounded-0" type="text" name="q"
+                            placeholder="Search our site" aria-label="Search">
+                        <div class="input-group-append">
+                            <button class="btn btn-black border border-black rounded-0" type="submit">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                    </div>
+                </form>
             </div>
-          </li>
-          <li class="list-inline-item">
-            <a class="{% if grand_total %}text-info font-weight-bold{% else %}text-black{% endif %} nav-link"
-              href="{% url 'view_bag' %}">
-              <div class="text-center">
-                <div><i class="fas fa-shopping-bag fa-lg"></i></div>
-                <p class="my-0">
-                  {% if grand_total %}
-                  ${{ grand_total|floatformat:2 }}
-                  {% else %} $0.00 {% endif %}
-                </p>
-              </div>
-            </a>
-          </li>
-        </ul>
-      </div>
+            <div class="col-lg-4 my-auto text-center text-lg-right">
+                <ul class="list-inline my-0">
+                    <li class="list-inline-item dropdown">
+                        <a class="nav-link text-black" href="#" id="user-options" data-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false">
+                            <div class="text-center">
+                                <i class="fas fa-user fa-lg"></i>
+                                <p class="my-0">My Account</p>
+                            </div>
+                        </a>
+                        <div class="dropdown-menu border-0" aria-labelledby="user-options">
+                            {% if request.user.is_authenticated %}
+                            {% if request.user.is_superuser %}
+                            <a href="{% url 'add_product' %}" class="dropdown-item">Product Management</a>
+                            {% endif %}
+                            <a href="{% url 'profile' %}" class="dropdown-item">My Profile</a>
+                            <a href="{% url 'account_logout' %}" class="dropdown-item">Logout</a>
+                            {% else %}
+                            <a href="{% url 'account_signup' %}" class="dropdown-item">Register</a>
+                            <a href="{% url 'account_login' %}" class="dropdown-item">Login</a>
+                            {% endif %}
+                        </div>
+                    </li>
+                    <li class="list-inline-item">
+                        <a class="{% if grand_total %}text-info font-weight-bold{% else %}text-black{% endif %} nav-link"
+                            href="{% url 'view_bag' %}">
+                            <div class="text-center">
+                                <i class="fas fa-shopping-bag fa-lg"></i>
+                                <p class="my-0">${{ grand_total|default:0.00|floatformat:2 }}</p>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Mobile Nav -->
+        <div class="row bg-white">
+            <nav class="navbar navbar-expand-lg navbar-light w-100">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main-nav"
+                    aria-controls="main-nav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                {% include 'includes/mobile-top-header.html' %}
+                {% include 'includes/main-nav.html' %}
+            </nav>
+        </div>
+
+        <!-- Delivery Banner -->
+        <div id="delivery-banner" class="row text-center">
+            <div class="col bg-black text-white">
+                <h4 class="logo-font my-1">Free delivery on orders over ${{ free_delivery_threshold }}!</h4>
+            </div>
+        </div>
+    </header>
+
+    <!-- Toast messages -->
+    {% if messages %}
+    <div class="message-container">
+        {% for message in messages %}
+        {% include 'includes/toasts/toast_'|add:message.tags|add:'.html' %}
+        {% endfor %}
     </div>
-    <div class="row bg-white">
-      <nav class="navbar navbar-expand-lg navbar-light w-100">
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main-nav"
-          aria-controls="main-nav" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        {% include 'includes/mobile-top-header.html' %}
-        {% include 'includes/main-nav.html' %}
-      </nav>
-    </div>
-    <div id="delivery-banner" class="row text-center">
-      <div class="col bg-black text-white">
-        <h4 class="logo-font my-1">Free delivery on orders over ${{ free_delivery_threshold }}!</h4>
-      </div>
-    </div>
-  </header>
+    {% endif %}
 
-  {% if messages %}
-  <div class="message-container">
-      {% for message in messages %}
-          {% with message.level as level %}
-              {% if level == 40 %}
-                  {% include 'includes/toasts/toast_error.html' %}
-              {% elif level == 30 %}
-                  {% include 'includes/toasts/toast_warning.html' %}
-              {% elif level == 25 %}
-                  {% include 'includes/toasts/toast_success.html' %}
-              {% else %}
-                  {% include 'includes/toasts/toast_info.html' %}
-              {% endif %}
-          {% endwith %}
-      {% endfor %}
-  </div>
- {% endif %}
+    {% block page_header %}{% endblock %}
+    {% block content %}{% endblock %}
 
-
-  {% block page_header %}
-  {% endblock %}
-
-  {% block content %}
-  {% endblock %}
-
-  {% block postloadjs %}
-  <script type="text/javascript">
-    $('.toast').toast('show');
-  </script>
-  {% endblock %}
+    {% block postloadjs %}
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+        integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"
+        defer></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"
+        defer></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            $('.toast').toast('show');
+        });
+    </script>
+    {% endblock %}
 </body>
 
 </html>
