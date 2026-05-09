@@ -45,7 +45,7 @@
 
     {% block corejs %}
     <script src="https://kit.fontawesome.com/3b20d96fa9.js" crossorigin="anonymous" defer></script>
-    <script src="https://js.stripe.com/v3/" defer></script>
+    <script src="https://js.stripe.com/v3/"></script>
     {% endblock %}
 
     {% block extra_js %}{% endblock %}
@@ -89,6 +89,7 @@
                             <a href="{% url 'add_product' %}" class="dropdown-item">Product Management</a>
                             {% endif %}
                             <a href="{% url 'profile' %}" class="dropdown-item">My Profile</a>
+                            <a href="{% url 'wishlist' %}" class="dropdown-item">My Wishlist</a>
                             <a href="{% url 'account_logout' %}" class="dropdown-item">Logout</a>
                             {% else %}
                             <a href="{% url 'account_signup' %}" class="dropdown-item">Register</a>
@@ -96,6 +97,16 @@
                             {% endif %}
                         </div>
                     </li>
+                    {% if request.user.is_authenticated %}
+                    <li class="list-inline-item">
+                        <a class="text-black nav-link" href="{% url 'wishlist' %}">
+                            <div class="text-center">
+                                <i class="fas fa-heart fa-lg"></i>
+                                <p class="my-0">Wishlist</p>
+                            </div>
+                        </a>
+                    </li>
+                    {% endif %}
                     <li class="list-inline-item">
                         <a class="{% if grand_total %}text-info font-weight-bold{% else %}text-black{% endif %} nav-link"
                             href="{% url 'view_bag' %}">

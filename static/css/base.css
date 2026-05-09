@@ -326,3 +326,105 @@ a.category-badge>span.badge:hover {
     padding: .25rem .5rem !important;
   }
 }
+
+/* ============================================
+   STAR RATING PICKER (review form)
+   ============================================ */
+
+.star-picker {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+  gap: 4px;
+  margin-bottom: 0.5rem;
+}
+
+.star-picker input[type="radio"] {
+  display: none;
+}
+
+.star-picker label {
+  font-size: 1.8rem;
+  color: #ccc;
+  cursor: pointer;
+  transition: color 0.15s ease;
+  margin: 0;
+  line-height: 1;
+}
+
+/* Fill stars on hover and for checked state */
+.star-picker input[type="radio"]:checked ~ label,
+.star-picker label:hover,
+.star-picker label:hover ~ label {
+  color: #f7c948;
+}
+
+/* ============================================
+   WISHLIST BUTTON (card quick-save)
+   ============================================ */
+
+.wishlist-heart-btn {
+  font-size: 0.8rem;
+  transition: color 0.2s ease;
+}
+
+.wishlist-heart-btn:hover {
+  color: #dc3545 !important;
+}
+
+/* ============================================
+   PAGINATION
+   ============================================ */
+
+.page-link {
+  color: #000;
+  border-color: #000;
+}
+
+.page-link:hover {
+  background-color: #f8f9fa;
+  color: #000;
+  border-color: #000;
+}
+
+.page-item.active .page-link {
+  background-color: #000;
+  border-color: #000;
+  color: #fff;
+}
+
+.page-item.disabled .page-link {
+  color: #6c757d;
+  border-color: #dee2e6;
+}
+
+/* ============================================
+   REVIEW CARDS
+   ============================================ */
+
+.card.shadow-sm {
+  transition: box-shadow 0.2s ease;
+}
+
+.card.shadow-sm:hover {
+  box-shadow: 0 .25rem .75rem rgba(0,0,0,.1) !important;
+}
+
+/* ============================================
+   STOCK BADGES – override Bootstrap defaults
+   ============================================ */
+
+.badge-success {
+  background-color: #28a745;
+  color: #fff;
+}
+
+.badge-warning {
+  background-color: #ffc107;
+  color: #212529;
+}
+
+.badge-danger {
+  background-color: #dc3545;
+  color: #fff;
+}

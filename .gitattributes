@@ -1,0 +1,3 @@
+# Tell GitHub Linguist that Django HTML templates are not the primary language.
+# This ensures Python shows as the dominant language in repository stats.
+*.html linguist-detectable=false

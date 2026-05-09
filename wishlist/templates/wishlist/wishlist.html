@@ -1,0 +1,125 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block page_header %}
+<div class="container header-container">
+    <div class="row">
+        <div class="col"></div>
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="overlay"></div>
+<div class="container mb-5">
+    <div class="row">
+        <div class="col">
+            <hr>
+            <h2 class="logo-font mb-4">My Wishlist</h2>
+            <hr>
+        </div>
+    </div>
+
+    {% if wishlist_items %}
+    <div class="row">
+        <div class="col">
+            <p class="text-muted">{{ wishlist_items|length }} saved item{{ wishlist_items|length|pluralize }}</p>
+        </div>
+    </div>
+
+    <div class="row">
+        {% for item in wishlist_items %}
+        <div class="col-sm-6 col-md-4 col-lg-3 mb-4">
+            <div class="card h-100 border-0 shadow-sm rounded-0">
+                {% if item.product.image %}
+                <a href="{% url 'product_detail' item.product.id %}">
+                    <img class="card-img-top img-fluid" src="{{ item.product.image.url }}" alt="{{ item.product.name }}">
+                </a>
+                {% else %}
+                <a href="{% url 'product_detail' item.product.id %}">
+                    <img class="card-img-top img-fluid" src="{{ MEDIA_URL }}noimage.png" alt="{{ item.product.name }}">
+                </a>
+                {% endif %}
+
+                <div class="card-body pb-0">
+                    <a href="{% url 'product_detail' item.product.id %}" class="text-black text-decoration-none">
+                        <p class="mb-1 font-weight-bold">{{ item.product.name }}</p>
+                    </a>
+                    <p class="lead mb-0 font-weight-bold">${{ item.product.price }}</p>
+
+                    {% if item.product.category %}
+                    <p class="small mt-1 mb-1">
+                        <a class="text-muted" href="{% url 'products' %}?category={{ item.product.category.name }}">
+                            <i class="fas fa-tag mr-1"></i>{{ item.product.category.friendly_name }}
+                        </a>
+                    </p>
+                    {% endif %}
+
+                    <!-- Stock status -->
+                    {% if item.product.stock_quantity is not None %}
+                    <div class="mb-2">
+                        {% if item.product.is_in_stock %}
+                            {% if item.product.is_low_stock %}
+                            <span class="badge badge-warning rounded-0">Only {{ item.product.stock_quantity }} left!</span>
+                            {% else %}
+                            <span class="badge badge-success rounded-0">In Stock</span>
+                            {% endif %}
+                        {% else %}
+                        <span class="badge badge-danger rounded-0">Out of Stock</span>
+                        {% endif %}
+                    </div>
+                    {% endif %}
+                </div>
+
+                <div class="card-footer bg-white border-0 pt-0">
+                    <div class="d-flex justify-content-between align-items-center mt-2">
+                        {% if item.product.is_in_stock %}
+                        <a href="{% url 'product_detail' item.product.id %}"
+                           class="btn btn-sm btn-black rounded-0 text-uppercase flex-grow-1 mr-1">
+                            <i class="fas fa-shopping-bag mr-1"></i>Add to Bag
+                        </a>
+                        {% else %}
+                        <button class="btn btn-sm btn-secondary rounded-0 text-uppercase flex-grow-1 mr-1" disabled>
+                            Out of Stock
+                        </button>
+                        {% endif %}
+
+                        <form method="POST" action="{% url 'wishlist_remove' item.product.id %}" class="d-inline">
+                            {% csrf_token %}
+                            <input type="hidden" name="next" value="{% url 'wishlist' %}">
+                            <button type="submit" class="btn btn-sm btn-outline-danger rounded-0"
+                                    title="Remove from wishlist">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </form>
+                    </div>
+                    <small class="text-muted">Added {{ item.added_at|date:"N j, Y" }}</small>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div class="row mt-3">
+        <div class="col">
+            <a href="{% url 'products' %}" class="btn btn-outline-black rounded-0">
+                <span class="icon"><i class="fas fa-chevron-left"></i></span>
+                <span class="text-uppercase">Keep Shopping</span>
+            </a>
+        </div>
+    </div>
+
+    {% else %}
+    <div class="row">
+        <div class="col text-center py-5">
+            <i class="far fa-heart fa-4x text-muted mb-3 d-block"></i>
+            <h4 class="text-muted">Your wishlist is empty</h4>
+            <p class="text-muted">Save your favourite items here and come back to them later.</p>
+            <a href="{% url 'products' %}" class="btn btn-black rounded-0 text-uppercase mt-3">
+                Start Shopping
+            </a>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

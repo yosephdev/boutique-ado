@@ -46,7 +46,7 @@
                             {% if search_term or current_categories or current_sorting != 'None_None' %}
                                 <span class="small"><a href="{% url 'products' %}">Products Home</a> | </span>
                             {% endif %}
-                            {{ products|length }} Products{% if search_term %} found for <strong>"{{ search_term }}"</strong>{% endif %}
+                            {{ product_count }} Products{% if search_term %} found for <strong>"{{ search_term }}"</strong>{% endif %}
                         </p>
                     </div>
                 </div>
@@ -77,15 +77,39 @@
                                                     </a>
                                                 </p>
                                             {% endif %}
-                                            {% if product.rating %}
-                                                <small class="text-muted"><i class="fas fa-star mr-1"></i>{{ product.rating }} / 5</small>
+                                            {% with avg=product.average_rating %}
+                                            {% if avg %}
+                                                <small class="text-muted">
+                                                    <i class="fas fa-star text-warning mr-1"></i>{{ avg }} / 5
+                                                </small>
                                             {% else %}
-                                                <small class="text-muted">No Rating</small>
+                                                <small class="text-muted">No reviews yet</small>
+                                            {% endif %}
+                                            {% endwith %}
+                                            {% if product.stock_quantity is not None and not product.is_in_stock %}
+                                                <span class="badge badge-danger rounded-0 d-block mt-1" style="width:fit-content">Out of Stock</span>
+                                            {% elif product.is_low_stock %}
+                                                <span class="badge badge-warning rounded-0 d-block mt-1" style="width:fit-content">Only {{ product.stock_quantity }} left!</span>
+                                            {% endif %}
+                                            {% if request.user.is_authenticated %}
+                                            <div class="mt-1">
+                                                <form method="POST" action="{% url 'wishlist_add' product.id %}" class="d-inline">
+                                                    {% csrf_token %}
+                                                    <button type="submit" class="btn btn-sm p-0 border-0 bg-transparent text-muted wishlist-heart-btn"
+                                                            title="Save to Wishlist">
+                                                        <i class="far fa-heart"></i> Save
+                                                    </button>
+                                                </form>
+                                            </div>
                                             {% endif %}
                                             {% if request.user.is_superuser %}
                                             <small class="ml-3">
-                                                <a href="{% url 'edit_product' product.id %}">Edit</a> | 
-                                                <a class="text-danger" href="{% url 'delete_product' product.id %}">Delete</a>
+                                                <a href="{% url 'edit_product' product.id %}">Edit</a> |
+                                                <a class="text-danger delete-product-link" href="#"
+                                                   data-toggle="modal"
+                                                   data-target="#deleteModal"
+                                                   data-product-id="{{ product.id }}"
+                                                   data-product-name="{{ product.name }}">Delete</a>
                                             </small>
                                             {% endif %}
                                         </div>
@@ -97,7 +121,7 @@
                             <div class="col-12 d-sm-none mb-5">
                                 <hr>
                             </div>
-                        {% endif %}                        
+                        {% endif %}
                         {% if forloop.counter|divisibleby:2 %}
                             <div class="col-12 d-none d-sm-block d-md-block d-lg-none mb-5">
                                 <hr>
@@ -118,16 +142,82 @@
             </div>
         </div>
     </div>
+
+    <!-- Pagination -->
+    {% if page_obj.has_other_pages %}
+    <div class="container my-4">
+        <nav aria-label="Product pagination">
+            <ul class="pagination justify-content-center flex-wrap">
+                {% if page_obj.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link rounded-0" href="?page={{ page_obj.previous_page_number }}{% if request.GET.sort %}&sort={{ request.GET.sort }}{% endif %}{% if request.GET.direction %}&direction={{ request.GET.direction }}{% endif %}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                {% else %}
+                    <li class="page-item disabled"><span class="page-link rounded-0">&laquo;</span></li>
+                {% endif %}
+
+                {% for num in paginator.page_range %}
+                    {% if page_obj.number == num %}
+                        <li class="page-item active">
+                            <span class="page-link bg-black border-black">{{ num }}</span>
+                        </li>
+                    {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                        <li class="page-item">
+                            <a class="page-link rounded-0" href="?page={{ num }}{% if request.GET.sort %}&sort={{ request.GET.sort }}{% endif %}{% if request.GET.direction %}&direction={{ request.GET.direction }}{% endif %}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">{{ num }}</a>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+
+                {% if page_obj.has_next %}
+                    <li class="page-item">
+                        <a class="page-link rounded-0" href="?page={{ page_obj.next_page_number }}{% if request.GET.sort %}&sort={{ request.GET.sort }}{% endif %}{% if request.GET.direction %}&direction={{ request.GET.direction }}{% endif %}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                {% else %}
+                    <li class="page-item disabled"><span class="page-link rounded-0">&raquo;</span></li>
+                {% endif %}
+            </ul>
+        </nav>
+        <p class="text-center text-muted small">Page {{ page_obj.number }} of {{ paginator.num_pages }}</p>
+    </div>
+    {% endif %}
+
     <div class="btt-button shadow-sm rounded-0 border border-black">
         <a class="btt-link d-flex h-100">
             <i class="fas fa-arrow-up text-black mx-auto my-auto"></i>
-        </a>	
+        </a>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content rounded-0">
+                <div class="modal-header border-bottom-0">
+                    <h5 class="modal-title logo-font" id="deleteModalLabel">Confirm Delete</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to permanently delete <strong id="deleteProductName"></strong>? This action cannot be undone.</p>
+                </div>
+                <div class="modal-footer border-top-0">
+                    <button type="button" class="btn btn-outline-black rounded-0" data-dismiss="modal">Cancel</button>
+                    <form id="deleteForm" method="POST" action="">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger rounded-0">Delete Product</button>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
 {% endblock %}
 
 {% block postloadjs %}
     {{ block.super }}
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script type="text/javascript">
         (function($) {
             $(document).ready(function() {
@@ -140,25 +230,27 @@
                     var selector = $(this);
                     var currentUrl = new URL(window.location);
                     var selectedVal = selector.val();
-
                     if (selectedVal !== "reset") {
                         var sortParts = selectedVal.split("_");
                         if (sortParts.length === 2) {
-                            var sort = sortParts[0];
-                            var direction = sortParts[1];
-                            currentUrl.searchParams.set("sort", sort);
-                            currentUrl.searchParams.set("direction", direction);
+                            currentUrl.searchParams.set("sort", sortParts[0]);
+                            currentUrl.searchParams.set("direction", sortParts[1]);
                         }
                     } else {
-                        if (currentUrl.searchParams.has("sort")) {
-                            currentUrl.searchParams.delete("sort");
-                        }
-                        if (currentUrl.searchParams.has("direction")) {
-                            currentUrl.searchParams.delete("direction");
-                        }
+                        currentUrl.searchParams.delete("sort");
+                        currentUrl.searchParams.delete("direction");
                     }
-
+                    currentUrl.searchParams.delete("page");
                     window.location.replace(currentUrl);
+                });
+
+                // Wire up delete confirmation modal
+                $('.delete-product-link').click(function(e) {
+                    e.preventDefault();
+                    var productId = $(this).data('product-id');
+                    var productName = $(this).data('product-name');
+                    $('#deleteProductName').text(productName);
+                    $('#deleteForm').attr('action', '/products/delete/' + productId + '/');
                 });
             });
         })(jQuery);

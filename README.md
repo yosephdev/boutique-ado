@@ -2,6 +2,8 @@
 
 Boutique Ado is a Django web application for an online clothing store. Users can browse through available products, add items to their shopping bag, and proceed to checkout to complete their orders.
 
+![Homepage Screenshot](./homepage_screenshot.png)
+
 ## Table of Contents
 
 - [Installation](#installation)
