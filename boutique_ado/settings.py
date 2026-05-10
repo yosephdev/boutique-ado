@@ -104,9 +104,10 @@ LOGIN_REDIRECT_URL = "/"
 
 WSGI_APPLICATION = "boutique_ado.wsgi.application"
 
-if "DATABASE_URL" in os.environ:
+_db_url = os.environ.get("DATABASE_URL", "")
+if _db_url:
     DATABASES = {
-        "default": dj_database_url.parse(os.environ.get("DATABASE_URL"))
+        "default": dj_database_url.parse(_db_url)
     }
 else:
     DATABASES = {
