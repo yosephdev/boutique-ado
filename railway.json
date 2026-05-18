@@ -5,6 +5,6 @@
     "buildCommand": "python manage.py collectstatic --noinput"
   },
   "deploy": {
-    "startCommand": "gunicorn boutique_ado.wsgi:application"
+    "startCommand": "python manage.py migrate && gunicorn boutique_ado.wsgi:application"
   }
 }
